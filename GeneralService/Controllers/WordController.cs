@@ -27,7 +27,6 @@ namespace GeneralService.Controllers
 
             //1. access third party api
             var url = endpoint + word?.Trim();
-
             using (var httpClient = new HttpClient())
             {
                 var result = httpClient.GetStringAsync(new Uri(url)).Result;
