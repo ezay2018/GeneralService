@@ -31,14 +31,10 @@ namespace GeneralService.Controllers
             using (var httpClient = new HttpClient())
             {
                 var result = httpClient.GetStringAsync(new Uri(url)).Result;
-
                 response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(result, System.Text.Encoding.UTF8, "application/json");
-
                 rootObject = Util.Extract(result);
             }
-
-
             return response;
         }
 
@@ -54,24 +50,20 @@ namespace GeneralService.Controllers
 
             //1. access third party api
             var url = endpoint + word?.Trim();
-
             using (var httpClient = new HttpClient())
             {
                 var result = httpClient.GetStringAsync(new Uri(url)).Result;
-
                 response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(result, System.Text.Encoding.UTF8, "application/json");
-
                 rootObject = Util.Extract(result);
             }
 
             //2. Get the first response, if any
             var firstResponse = rootObject?.query?.search?.FirstOrDefault()?.snippet;
-            if(firstResponse != null)
+            if (firstResponse != null)
             {
                 firstResponse = HtmlRemoval.StripTagsCharArray(firstResponse);
             }
-
             return firstResponse;
         }
     }
